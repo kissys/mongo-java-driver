@@ -6,38 +6,233 @@
     <description>Recent content on MongoDB Java Driver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Mar 2015 16:39:22 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2015 14:27:51 -0400</lastBuildDate>
     <atom:link href="/mongo-java-driver/3.0/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>System Requirements</title>
-      <link>/mongo-java-driver/3.0/reference/system-requirements/</link>
-      <pubDate>Thu, 19 Mar 2015 16:39:22 -0400</pubDate>
+      <title>Extended JSON</title>
+      <link>/mongo-java-driver/3.0/reference/bson/extended-json/</link>
+      <pubDate>Thu, 19 Mar 2015 14:27:51 -0400</pubDate>
       
-      <guid>/mongo-java-driver/3.0/reference/system-requirements/</guid>
+      <guid>/mongo-java-driver/3.0/reference/bson/extended-json/</guid>
       <description>
 
-&lt;h1 id=&#34;system-requirements:713449ef5ae6758386844a511f29cc91&#34;&gt;System Requirements&lt;/h1&gt;
+&lt;h2 id=&#34;mongodb-extended-json:00e2b44c3e0a101f20b664260440aec9&#34;&gt;MongoDB Extended JSON&lt;/h2&gt;
 
-&lt;p&gt;The 3.0 Java driver will run with Java 6 or later: however, specific features require Java 7:&lt;/p&gt;
+&lt;p&gt;The Java driver supports reading and writing JSON-like documents with the &lt;a href=&#34;http://api.mongodb.org/java/3.0/?org/bson/json/JsonReader.html&#34;&gt;JsonReader&lt;/a&gt; and
+&lt;a href=&#34;http://api.mongodb.org/java/3.0/?org/bson/json/JsonWriter.html&#34;&gt;JsonWriter&lt;/a&gt; classes, which can read/write both flavors of
+&lt;a href=&#34;http://docs.mongodb.org/manual/reference/mongodb-extended-json/&#34;&gt;MongoDB Extended JSON&lt;/a&gt;:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;SSL support requires Java 7 in order to perform host name verification, which is enabled by default.  See
-&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/connecting/#SSL:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;SSL&lt;/a&gt; for details on how to disable host name verification.&lt;/li&gt;
-&lt;li&gt;The asynchronous API requires Java 7, as by default it relies on
-&lt;a href=&#34;http://docs.oracle.com/javase/7/docs/api/java/nio/channels/AsynchronousSocketChannel.html&#34;&gt;AsynchronousSocketChannel&lt;/a&gt; for
-its implementation.  See &lt;a href=&#34;No page found with path or logical name &#34;async&#34;.
-&#34;&gt;Async&lt;/a&gt; for details on configuring the driver to use &lt;a href=&#34;http://netty.io/&#34;&gt;Netty&lt;/a&gt; instead.&lt;/li&gt;
+&lt;li&gt;MongoDB Extended JSON Strict Mode: representations of BSON types that conform to the &lt;a href=&#34;http://www.json.org/&#34;&gt;JSON RFC&lt;/a&gt;. This is the
+format that &lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoexport/&#34;&gt;mongoexport&lt;/a&gt; produces and
+&lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoimport/&#34;&gt;mongoimport&lt;/a&gt; consumes.&lt;/li&gt;
+&lt;li&gt;MongoDB Shell Mode: a superset of JSON that the
+&lt;a href=&#34;http://docs.mongodb.org/manual/tutorial/getting-started-with-the-mongo-shell/&#34;&gt;MongoDB shell&lt;/a&gt; can parse.&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;h2 id=&#34;writing-json:00e2b44c3e0a101f20b664260440aec9&#34;&gt;Writing JSON&lt;/h2&gt;
+
+&lt;p&gt;Consider the task of implementing a &lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoexport/&#34;&gt;mongoexport&lt;/a&gt;-like tool using the
+Java driver.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;String outputFilename;                 // initialize to the path of the file to write to
+MongoCollection&amp;lt;Document&amp;gt; collection;  // initialize to the collection from which you want to query
+
+BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilename));
+
+try {
+    for (Document doc : collection.find()) {
+        writer.write(doc.toJson());
+        writer.newLine();
+} finally {
+   writer.close();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;Document.toJson()&lt;/code&gt; method is the key part of this code snippet.  The implementation of this method constructs an instance of a
+&lt;code&gt;JsonWriter&lt;/code&gt; with its default settings, which will write in strict mode with no new lines or indentation.&lt;/p&gt;
+
+&lt;p&gt;You can override this default behavior by using one of the overloads of Document.toJson().  As an example, consider the task of writing a
+ JSON string that can be copied and pasted into the MongoDB shell:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;SimpleDateFormat fmt = new SimpleDateFormat(&amp;quot;dd/MM/yy&amp;quot;);
+Date first = fmt.parse(&amp;quot;01/01/2014&amp;quot;);
+Date second = fmt.parse(&amp;quot;01/01/2015&amp;quot;);
+Document doc = new Document(&amp;quot;startDate&amp;quot;, new Document(&amp;quot;$gt&amp;quot;, first).append(&amp;quot;$lt&amp;quot;, second)); 
+System.out.println(doc.toJson(new JsonWriterSettings(JsonMode.SHELL))); 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This code snippet will print out MongoDB shell-compatible JSON, which can then be pasted into the shell:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;{ &amp;quot;startDate&amp;quot; : { &amp;quot;$gt&amp;quot; : ISODate(&amp;quot;2014-01-01T05:00:00.000Z&amp;quot;), &amp;quot;$lt&amp;quot; : ISODate(&amp;quot;2015-01-01T05:00:00.000Z&amp;quot;) } }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;reading-json:00e2b44c3e0a101f20b664260440aec9&#34;&gt;Reading JSON&lt;/h2&gt;
+
+&lt;p&gt;Consider the task of implementing a &lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoimport/&#34;&gt;mongoimport&lt;/a&gt;-like tool using the
+Java driver.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;String inputFilename;                  // initialize to the path of the file to read from
+MongoCollection&amp;lt;Document&amp;gt; collection;  // initialize to the collection to which you want to write
+
+BufferedReader reader = new BufferedReader(new FileReader(inputFilename));
+
+try {
+    String json;
+
+    while ((json = reader.readLine()) != null) {
+        collection.insertOne(Document.parse(json));
+    } 
+} finally {
+    reader.close();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;Document.parse()&lt;/code&gt; static factory method is the key part of this code snippet.  The implementation of this method constructs an
+instance of a &lt;code&gt;JsonReader&lt;/code&gt; with the given string and returns an instance of an equivalent Document instance. &lt;code&gt;JsonReader&lt;/code&gt;&lt;br /&gt;
+automatically detects the JSON flavor in the string, so you do not need to specify it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Documents</title>
+      <link>/mongo-java-driver/3.0/reference/bson/documents/</link>
+      <pubDate>Thu, 19 Mar 2015 14:27:51 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/bson/documents/</guid>
+      <description>
+
+&lt;h2 id=&#34;bsondocument:e92c82a38c6cc77d5440f2e87c867df6&#34;&gt;BsonDocument&lt;/h2&gt;
+
+&lt;p&gt;Although not generally needed in the high-level driver API, the &lt;a href=&#34;http://api.mongodb.org/java/3.0/?org/bson/BsonDocument.html&#34;&gt;BsonDocument&lt;/a&gt; class is central to
+the way that documents are managed internally by the driver.  The BsonDocument class can represent dynamically structured documents of
+any complexity with a type-safe API, at the cost of an additional level of verbosity.  For instance, the document
+&lt;code&gt;{ a: &amp;quot;MongoDB&amp;quot;, b: [ { c: 1 } ] }&lt;/code&gt; can be constructed as a BsonDocument as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;new BsonDocument().append(&amp;quot;a&amp;quot;, new BsonString(&amp;quot;MongoDB&amp;quot;))
+                  .append(&amp;quot;b&amp;quot;, new BsonArray(Arrays.asList(new BsonInt32(1), new BsonInt32(2))));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The type safety comes from BsonDocument implementing &lt;code&gt;Map&amp;lt;String, BsonValue&amp;gt;&lt;/code&gt;, so even built-in types like &lt;code&gt;int&lt;/code&gt;, &lt;code&gt;String&lt;/code&gt; and &lt;code&gt;List&lt;/code&gt; must
+be wrapped in a sub-class of &lt;code&gt;BsonValue&lt;/code&gt;.  For a complete list of BsonValue sub-types, please consult the
+&lt;a href=&#34;http://api.mongodb.org/java/3.0/?org/bson/BsonValue.html&#34;&gt;API documentation&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;document:e92c82a38c6cc77d5440f2e87c867df6&#34;&gt;Document&lt;/h2&gt;
+
+&lt;p&gt;Most users of the high-level driver API will use the &lt;a href=&#34;http://api.mongodb.org/java/3.0/?org/bson/Document.html&#34;&gt;Document&lt;/a&gt; class instead.  Like BsonDocument, the
+Document class can represent dynamically structured documents of any complexity; however, the typing is much looser, as Document
+implements &lt;code&gt;Map&amp;lt;String, Object&amp;gt;&lt;/code&gt;. As a result, the same document as above can be constructed using the Document class as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;new Document().append(&amp;quot;a&amp;quot;, &amp;quot;MongoDB&amp;quot;)
+              .append(&amp;quot;b&amp;quot;, Arrays.asList(1, 2));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There is less code to write, but runtime errors are possible if you inadvertently add an instance of an unsupported value type.  The most
+commonly used value types are:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;BSON type&lt;/th&gt;
+&lt;th&gt;Java type&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Document&lt;/td&gt;
+&lt;td&gt;org.bson.Document&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Array&lt;/td&gt;
+&lt;td&gt;java.util.List&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Date&lt;/td&gt;
+&lt;td&gt;java.util.Date&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Boolean&lt;/td&gt;
+&lt;td&gt;java.lang.Boolean&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Double&lt;/td&gt;
+&lt;td&gt;java.lang.Double&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Int32&lt;/td&gt;
+&lt;td&gt;java.lang.Integer&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Int64&lt;/td&gt;
+&lt;td&gt;java.lang.Long&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;String&lt;/td&gt;
+&lt;td&gt;java.lang.String&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Binary&lt;/td&gt;
+&lt;td&gt;org.bson.types.Binary&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;ObjectId&lt;/td&gt;
+&lt;td&gt;org.bson.types.ObjectId&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Null&lt;/td&gt;
+&lt;td&gt;null&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;It is actually possible to change these mappings; the mechanism for doing so is currently beyond the scope of this reference.&lt;/p&gt;
+
+&lt;h2 id=&#34;dbobject:e92c82a38c6cc77d5440f2e87c867df6&#34;&gt;DBObject&lt;/h2&gt;
+
+&lt;p&gt;Although not recommended for new applications, those upgrading from the 2.x driver series may continue to use the
+&lt;a href=&#34;http://api.mongodb.org/java/3.0/?com/mongodb/DBObject.html&#34;&gt;DBObject&lt;/a&gt; interface to represent BSON documents.  DBObject is similar to Document in that it
+represents BSON values as &lt;code&gt;Object&lt;/code&gt;, but it has a few shortcomings that were impossible to overcome:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it is an interface rather than a class, so it&amp;rsquo;s API can not be extended without breaking binary compatibility&lt;/li&gt;
+&lt;li&gt;it doesn&amp;rsquo;t actually implement &lt;code&gt;Map&amp;lt;String, Object&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;because it is an interface, a separate concrete class called &lt;a href=&#34;http://api.mongodb.org/java/3.0/?com/mongodb/BasicDBObject.html&#34;&gt;BasicDBObject&lt;/a&gt; which implements
+that interface, is required&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;bson:e92c82a38c6cc77d5440f2e87c867df6&#34;&gt;Bson&lt;/h1&gt;
+
+&lt;p&gt;To tie these all together, the driver contains a small but powerful interface called, simply,
+&lt;a href=&#34;http://api.mongodb.org/java/3.0/?org/bson/conversions/Bson.html&#34;&gt;Bson&lt;/a&gt;.  Any class that represents a BSON document, whether included in the driver itself
+or from a third party, can implement this interface and can then be used any place in the high-level API where a BSON document is
+required. The three classes discussed above all implement this interface and so can be used interchangeably based on the needs of a given
+application.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;collection.find(new BsonDocument(&amp;quot;x&amp;quot;, new BsonInt32(1)));
+collection.find(new Document(&amp;quot;x&amp;quot;, 1));
+collection.find(new BasicDBObject(&amp;quot;x&amp;quot;, 1));
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
     <item>
       <title>Authenticating</title>
-      <link>/mongo-java-driver/3.0/reference/authenticating/</link>
+      <link>/mongo-java-driver/3.0/reference/connecting/authenticating/</link>
       <pubDate>Thu, 19 Mar 2015 14:27:51 -0400</pubDate>
       
-      <guid>/mongo-java-driver/3.0/reference/authenticating/</guid>
+      <guid>/mongo-java-driver/3.0/reference/connecting/authenticating/</guid>
       <description>
 
 &lt;h1 id=&#34;authenticating:7010764a78ee04293fe005f4d2277400&#34;&gt;Authenticating&lt;/h1&gt;
@@ -190,88 +385,21 @@ via the &lt;a href=&#34;https://www.ietf.org/rfc/rfc4616.txt&#34;&gt;PLAIN&lt;/a
     </item>
     
     <item>
-      <title>JSON support</title>
-      <link>/mongo-java-driver/3.0/reference/json-support/</link>
+      <title>Management</title>
+      <link>/mongo-java-driver/3.0/reference/management/</link>
       <pubDate>Thu, 19 Mar 2015 14:27:51 -0400</pubDate>
       
-      <guid>/mongo-java-driver/3.0/reference/json-support/</guid>
+      <guid>/mongo-java-driver/3.0/reference/management/</guid>
       <description>
 
-&lt;h2 id=&#34;json-support:e505d39b509f1aead42fa7ce13cd17a9&#34;&gt;JSON Support&lt;/h2&gt;
+&lt;h2 id=&#34;management:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Management&lt;/h2&gt;
 
-&lt;p&gt;The Java driver supports reading and writing JSON documents with the &lt;a href=&#34;http://api.mongodb.org/java/3.0//?org/bson/json/JsonReader.html&#34;&gt;JsonReader&lt;/a&gt; and
-&lt;a href=&#34;http://api.mongodb.org/java/3.0//?org/bson/json/JsonWriter.html&#34;&gt;JsonWriter&lt;/a&gt; classes, which can read/write both flavors of
-&lt;a href=&#34;http://docs.mongodb.org/manual/reference/mongodb-extended-json/&#34;&gt;MongoDB Extended JSON&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;The driver provides two mechanisms for examining its state:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;MongoDB Extended JSON Strict Mode: representations of BSON types that conform to the &lt;a href=&#34;http://www.json.org/&#34;&gt;JSON RFC&lt;/a&gt;. This is the
-format that &lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoexport/&#34;&gt;mongoexport&lt;/a&gt; produces and
-&lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoimport/&#34;&gt;mongoimport&lt;/a&gt; consumes.&lt;/li&gt;
-&lt;li&gt;MongoDB Shell Mode: a superset of JSON that the
-&lt;a href=&#34;http://docs.mongodb.org/manual/tutorial/getting-started-with-the-mongo-shell/&#34;&gt;MongoDB shell&lt;/a&gt; can parse.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/management/logging/&#34;&gt;Logging&lt;/a&gt;: Comprehensive logging of all operations using &lt;a href=&#34;http://www.slf4j.org/&#34;&gt;SLF4J&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/management/monitoring/&#34;&gt;Management&lt;/a&gt;: Built on &lt;a href=&#34;http://docs.oracle.com/javase/8/docs/technotes/guides/jmx/&#34;&gt;JMX&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h2 id=&#34;writing-json:e505d39b509f1aead42fa7ce13cd17a9&#34;&gt;Writing JSON&lt;/h2&gt;
-
-&lt;p&gt;Consider the task of implementing a &lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoexport/&#34;&gt;mongoexport&lt;/a&gt;-like tool using the
-Java driver.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;String outputFilename;                 // initialize to the path of the file to write to
-MongoCollection&amp;lt;Document&amp;gt; collection;  // initialize to the collection from which you want to query
-
-BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilename));
-
-try {
-    for (Document doc : collection.find()) {
-        writer.write(doc.toJson());
-        writer.newLine();
-} finally {
-   writer.close();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;Document.toJson()&lt;/code&gt; method is the key part of this code snippet.  The implementation of this method constructs an instance of a
-&lt;code&gt;JsonWriter&lt;/code&gt; with its default settings, which will write in strict mode with no new lines or indentation.&lt;/p&gt;
-
-&lt;p&gt;You can override this default behavior by using one of the overloads of Document.toJson().  As an example, consider the task of writing a
- JSON string that can be copied and pasted into the MongoDB shell:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;SimpleDateFormat fmt = new SimpleDateFormat(&amp;quot;dd/MM/yy&amp;quot;);
-Date first = fmt.parse(&amp;quot;01/01/2014&amp;quot;);
-Date second = fmt.parse(&amp;quot;01/01/2015&amp;quot;);
-Document doc = new Document(&amp;quot;startDate&amp;quot;, new Document(&amp;quot;$gt&amp;quot;, first).append(&amp;quot;$lt&amp;quot;, second)); 
-System.out.println(doc.toJson(new JsonWriterSettings(JsonMode.SHELL))); 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This code snippet will print out MongoDB shell-compatible JSON, which can then be pasted into the shell:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;{ &amp;quot;startDate&amp;quot; : { &amp;quot;$gt&amp;quot; : ISODate(&amp;quot;2014-01-01T05:00:00.000Z&amp;quot;), &amp;quot;$lt&amp;quot; : ISODate(&amp;quot;2015-01-01T05:00:00.000Z&amp;quot;) } }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;reading-json:e505d39b509f1aead42fa7ce13cd17a9&#34;&gt;Reading JSON&lt;/h2&gt;
-
-&lt;p&gt;Consider the task of implementing a &lt;a href=&#34;http://docs.mongodb.org/manual/reference/program/mongoimport/&#34;&gt;mongoimport&lt;/a&gt;-like tool using the
-Java driver.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;String inputFilename;                  // initialize to the path of the file to read from
-MongoCollection&amp;lt;Document&amp;gt; collection;  // initialize to the collection to which you want to write
-
-BufferedReader reader = new BufferedReader(new FileReader(inputFilename));
-
-try {
-    String json;
-
-    while ((json = reader.readLine()) != null) {
-        collection.insertOne(Document.parse(json));
-    } 
-} finally {
-    reader.close();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;Document.parse()&lt;/code&gt; static factory method is the key part of this code snippet.  The implementation of this method constructs an
-instance of a &lt;code&gt;JsonReader&lt;/code&gt; with the given string and returns an instance of an equivalent Document instance. &lt;code&gt;JsonReader&lt;/code&gt;&lt;br /&gt;
-automatically detects the JSON flavor in the string, so you do not need to specify it.&lt;/p&gt;
 </description>
     </item>
     
@@ -289,6 +417,19 @@ automatically detects the JSON flavor in the string, so you do not need to speci
 methods that have been removed in 3.0.0.&lt;/p&gt;
 
 &lt;p&gt;Before upgrading to 3.0.0, compile against 2.13.0 with deprecation warnings enabled and remove use of any deprecated methods or classes.&lt;/p&gt;
+
+&lt;h2 id=&#34;system-requirements:104d6ec20d3c9fec84381edf43ec4f2f&#34;&gt;System Requirements&lt;/h2&gt;
+
+&lt;p&gt;The minimum JVM is now Java 6: however, specific features require Java 7:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SSL support requires Java 7 in order to perform host name verification, which is enabled by default.  See
+&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/connecting/ssl/&#34;&gt;SSL&lt;/a&gt; for details on how to disable host name verification.&lt;/li&gt;
+&lt;li&gt;The asynchronous API requires Java 7, as by default it relies on
+&lt;a href=&#34;http://docs.oracle.com/javase/7/docs/api/java/nio/channels/AsynchronousSocketChannel.html&#34;&gt;AsynchronousSocketChannel&lt;/a&gt; for
+its implementation.  See &lt;a href=&#34;No page found with path or logical name &#34;async&#34;.
+&#34;&gt;Async&lt;/a&gt; for details on configuring the driver to use &lt;a href=&#34;http://netty.io/&#34;&gt;Netty&lt;/a&gt; instead.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&#34;incompatiblities:104d6ec20d3c9fec84381edf43ec4f2f&#34;&gt;Incompatiblities&lt;/h2&gt;
 
@@ -359,6 +500,26 @@ encoders and decoders without requiring an intermediate Map instance.&lt;/li&gt;
     </item>
     
     <item>
+      <title>BSON</title>
+      <link>/mongo-java-driver/3.0/reference/bson/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:30 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/bson/</guid>
+      <description>
+
+&lt;h2 id=&#34;bson:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;BSON&lt;/h2&gt;
+
+&lt;p&gt;The driver comprehensively supports &lt;a href=&#34;http://www.bsonspec.org&#34;&gt;BSON&lt;/a&gt;, the data storage and network transfer format that MongoDB uses for
+“documents&amp;rdquo;. BSON, short for Binary &lt;a href=&#34;http://json.org/&#34;&gt;JSON&lt;/a&gt;, is a binary-encoded serialization of JSON-like documents.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/bson/documents/&#34;&gt;Documents&lt;/a&gt;: Documentation of the driver&amp;rsquo;s support for BSON documents&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/bson/extended-json/&#34;&gt;MongoDB Extended JSON&lt;/a&gt;: Documentation of the driver&amp;rsquo;s support for MongoDB Extended JSON&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Connecting</title>
       <link>/mongo-java-driver/3.0/reference/connecting/</link>
       <pubDate>Thu, 19 Mar 2015 12:53:30 -0400</pubDate>
@@ -366,11 +527,11 @@ encoders and decoders without requiring an intermediate Map instance.&lt;/li&gt;
       <guid>/mongo-java-driver/3.0/reference/connecting/</guid>
       <description>
 
-&lt;h2 id=&#34;connecting-to-mongodb:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;Connecting to MongoDB&lt;/h2&gt;
+&lt;h2 id=&#34;connecting-to-mongodb:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Connecting to MongoDB&lt;/h2&gt;
 
 &lt;p&gt;General information about connecting to MongoDB servers.&lt;/p&gt;
 
-&lt;h3 id=&#34;connection-string:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;Connection String&lt;/h3&gt;
+&lt;h3 id=&#34;connection-string:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Connection String&lt;/h3&gt;
 
 &lt;p&gt;The &lt;a href=&#34;http://docs.mongodb.org/manual/reference/connection-string/&#34;&gt;connection string&lt;/a&gt; is the simplest way to connect to one or more
 MongoDB servers. A connection string mostly follows &lt;a href=&#34;http://tools.ietf.org/html/rfc3986&#34;&gt;RFC 3986&lt;/a&gt; with the exception of the domain name.
@@ -388,9 +549,9 @@ MongoDB servers. A connection string mostly follows &lt;a href=&#34;http://tools
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The &lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/authenticating/&#34;&gt;authentication guide&lt;/a&gt; contains information on how to provide credentials.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/connecting/authenticating/&#34;&gt;authentication guide&lt;/a&gt; contains information on how to provide credentials.&lt;/p&gt;
 
-&lt;h4 id=&#34;the-database-component:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;The Database Component&lt;/h4&gt;
+&lt;h4 id=&#34;the-database-component:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;The Database Component&lt;/h4&gt;
 
 &lt;p&gt;The database component is optional and is used to indicate which database to authenticate against. When the database component is not
 provided, the &amp;ldquo;admin&amp;rdquo; database is used.&lt;/p&gt;
@@ -405,7 +566,7 @@ provided, the &amp;ldquo;admin&amp;rdquo; database is used.&lt;/p&gt;
 parses the database component, does not use the database component for anything other than authentication.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&#34;options:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;Options&lt;/h4&gt;
+&lt;h4 id=&#34;options:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Options&lt;/h4&gt;
 
 &lt;p&gt;Many options can be provided via the connection string. The ones that cannot may be provided in a &lt;code&gt;MongoClientOptions&lt;/code&gt; instance. To
 provide an option, append a &lt;code&gt;?&lt;/code&gt; to the connection string and separate options by an &lt;code&gt;&amp;amp;&lt;/code&gt;.&lt;/p&gt;
@@ -418,7 +579,7 @@ provide an option, append a &lt;code&gt;?&lt;/code&gt; to the connection string 
 &lt;p&gt;For a comprehensive list of the available options, see the &lt;a href=&#34;http://api.mongodb.org/java/3.0/com/mongodb/MongoClientURI.html&#34;&gt;MongoClientURI&lt;/a&gt;
 documentation.&lt;/p&gt;
 
-&lt;h3 id=&#34;mongoclient:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;MongoClient&lt;/h3&gt;
+&lt;h3 id=&#34;mongoclient:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;MongoClient&lt;/h3&gt;
 
 &lt;p&gt;A &lt;code&gt;MongoClient&lt;/code&gt; instance will be the root object for all interaction with MongoDB. It is all that is needed to handle connecting to
 servers, monitoring servers, and performing operations against those servers. Without any arguments, constructing a &lt;code&gt;MongoClient&lt;/code&gt;
@@ -453,10 +614,10 @@ MongoClient client = new MongoClient(uri);
     
     <item>
       <title>SSL</title>
-      <link>/mongo-java-driver/3.0/reference/ssl/</link>
+      <link>/mongo-java-driver/3.0/reference/connecting/ssl/</link>
       <pubDate>Thu, 19 Mar 2015 12:53:26 -0400</pubDate>
       
-      <guid>/mongo-java-driver/3.0/reference/ssl/</guid>
+      <guid>/mongo-java-driver/3.0/reference/connecting/ssl/</guid>
       <description>
 
 &lt;h1 id=&#34;ssl:3c79738ba42290c5c30beda88b41710e&#34;&gt;SSL&lt;/h1&gt;
@@ -519,15 +680,19 @@ MongoDB server:&lt;/p&gt;
     
     <item>
       <title>Monitoring</title>
-      <link>/mongo-java-driver/3.0/reference/monitoring/</link>
+      <link>/mongo-java-driver/3.0/reference/management/monitoring/</link>
       <pubDate>Thu, 19 Mar 2015 12:53:26 -0400</pubDate>
       
-      <guid>/mongo-java-driver/3.0/reference/monitoring/</guid>
+      <guid>/mongo-java-driver/3.0/reference/management/monitoring/</guid>
       <description>
 
 &lt;h1 id=&#34;monitoring:cc05611fd873a7cd9f74d7c5b2563b10&#34;&gt;Monitoring&lt;/h1&gt;
 
-&lt;p&gt;The driver currently MXBean instances of a single type:
+&lt;p&gt;The driver uses &lt;a href=&#34;http://docs.oracle.com/javase/8/docs/technotes/guides/jmx/&#34;&gt;JMX&lt;/a&gt; to create
+&lt;a href=&#34;http://docs.oracle.com/javase/tutorial/jmx/mbeans/mxbeans.html&#34;&gt;MXBeans&lt;/a&gt; that allow an
+application or end user to monitor various aspects of the driver.&lt;/p&gt;
+
+&lt;p&gt;The driver creates MXBean instances of a single type:
 &lt;a href=&#34;http://api.mongodb.org/java/3.0/com/mongodb/management/ConnectionPoolStatisticsMBean.html&#34;&gt;ConnectionPoolStatisticsMBean&lt;/a&gt;.
  The driver registers one &lt;code&gt;ConnectionPoolStatisticsMBean&lt;/code&gt; instance per each server it connects to. For example, in the case of a replica
  set, the driver creates an instance per each non-hidden member of the replica set.&lt;/p&gt;
@@ -547,10 +712,10 @@ application has multiple &lt;code&gt;MongoClient&lt;/code&gt; instances connecte
     
     <item>
       <title>Logging</title>
-      <link>/mongo-java-driver/3.0/reference/logging/</link>
+      <link>/mongo-java-driver/3.0/reference/management/logging/</link>
       <pubDate>Wed, 18 Mar 2015 21:14:20 -0400</pubDate>
       
-      <guid>/mongo-java-driver/3.0/reference/logging/</guid>
+      <guid>/mongo-java-driver/3.0/reference/management/logging/</guid>
       <description>
 
 &lt;h1 id=&#34;logging:3f3af53408cff75953b33723c0b061bb&#34;&gt;Logging&lt;/h1&gt;
@@ -605,23 +770,27 @@ JUL (&lt;code&gt;java.util.logging&lt;/code&gt;).&lt;/p&gt;
       <guid>/mongo-java-driver/3.0/</guid>
       <description>
 
-&lt;h2 id=&#34;welcome-to-the-java-mongodb-docs:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Welcome to the Java MongoDB Docs&lt;/h2&gt;
+&lt;h2 id=&#34;mongodb-java-driver-documentation:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;MongoDB Java Driver Documentation&lt;/h2&gt;
 
-&lt;h2 id=&#34;getting-started:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Getting Started&lt;/h2&gt;
+&lt;p&gt;Welcome to the MongoDB Java driver documentation hub for the 3.0 driver release.&lt;/p&gt;
 
-&lt;p&gt;Quick guide to getting started&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;getting-started:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Getting Started&lt;/h3&gt;
 
-&lt;h2 id=&#34;what-s-new-in-3-0:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;What&amp;rsquo;s New in 3.0&lt;/h2&gt;
+&lt;p&gt;The &lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/tutorial/&#34;&gt;Getting Started&lt;/a&gt; guide contains installation instructions and a simple tutorial to get up
+and running quickly.&lt;/p&gt;
 
-&lt;p&gt;Summary and link to the 3.0 docs&lt;/p&gt;
+&lt;h3 id=&#34;what-s-new-in-2-0:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;What&amp;rsquo;s new in 2.0&lt;/h3&gt;
 
-&lt;h2 id=&#34;upgrading:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Upgrading&lt;/h2&gt;
+&lt;p&gt;The &lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/whats-new/&#34;&gt;What&amp;rsquo;s New&lt;/a&gt; guide explains the major new features of the driver.&lt;/p&gt;
 
-&lt;p&gt;Summary and link to the upgrade guide&lt;/p&gt;
+&lt;h3 id=&#34;upgrading:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Upgrading&lt;/h3&gt;
 
-&lt;h2 id=&#34;reference:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Reference&lt;/h2&gt;
+&lt;p&gt;If you are coming from the 2.x series of the driver, consult the &lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/whats-new/upgrading/&#34;&gt;upgrading&lt;/a&gt;
+documentation on breaking changes.&lt;/p&gt;
 
-&lt;p&gt;Summary and link to the reference guide&lt;/p&gt;
+&lt;h3 id=&#34;reference:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Reference&lt;/h3&gt;
+
+&lt;p&gt;For more detailed documentation, see the &lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/&#34;&gt;Reference&lt;/a&gt; guide.&lt;/p&gt;
 </description>
     </item>
     
@@ -633,9 +802,17 @@ JUL (&lt;code&gt;java.util.logging&lt;/code&gt;).&lt;/p&gt;
       <guid>/mongo-java-driver/3.0/reference/</guid>
       <description>
 
-&lt;h2 id=&#34;mongodb-java-driver-reference-documentation:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;MongoDB Java Driver Reference Documentation&lt;/h2&gt;
+&lt;h2 id=&#34;reference:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Reference&lt;/h2&gt;
 
-&lt;p&gt;This is the reference documentation.  Not sure what to say yet at the top level.&lt;/p&gt;
+&lt;p&gt;The reference documentation for the Java driver focuses on high-level documentation and use-cases. The Javadoc-generated API reference is
+&lt;a href=&#34;http://api.mongodb.org/java/3.0/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/bson/&#34;&gt;BSON&lt;/a&gt;: Documentation of the driver&amp;rsquo;s support for BSON&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/connecting/&#34;&gt;Connecting&lt;/a&gt;: Documentation of the driver&amp;rsquo;s support for connecting to MongoDB servers&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/management/&#34;&gt;Management&lt;/a&gt;: Documentation of the driver&amp;rsquo;s support for logging and monitoring of its
+internal state&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
@@ -648,40 +825,6 @@ JUL (&lt;code&gt;java.util.logging&lt;/code&gt;).&lt;/p&gt;
       <description>
 
 &lt;h1 id=&#34;admin-introduction:8e617e003072f3a207d77f44b5ddc8e8&#34;&gt;Admin Introduction&lt;/h1&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Getting Started</title>
-      <link>/mongo-java-driver/3.0/tutorial/</link>
-      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
-      
-      <guid>/mongo-java-driver/3.0/tutorial/</guid>
-      <description>
-
-&lt;h2 id=&#34;getting-started:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Getting Started&lt;/h2&gt;
-
-&lt;p&gt;To help you get started quickly on the new driver follow:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/tutorial/installation-guide/&#34;&gt;Installation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/tutorial/crud-operations/&#34;&gt;CRUD Operations&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/tutorial/admin-operations/&#34;&gt;Admin Operations&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Installation Guide</title>
-      <link>/mongo-java-driver/3.0/tutorial/installation-guide/</link>
-      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
-      
-      <guid>/mongo-java-driver/3.0/tutorial/installation-guide/</guid>
-      <description>
-
-&lt;h1 id=&#34;installation:9d4f5debee078ff2736b8039cc26277c&#34;&gt;Installation&lt;/h1&gt;
-
-&lt;p&gt;How to install the driver&lt;/p&gt;
 </description>
     </item>
     

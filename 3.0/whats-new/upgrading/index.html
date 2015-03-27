@@ -262,18 +262,6 @@
       
       
     
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
     
   
 
@@ -525,10 +513,37 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/system-requirements/">
+<li class="toctree-l2 ">
+  <a href="/mongo-java-driver/3.0/reference/bson/" class="">
+      <i class='fa'></i>
+      <span>BSON</span>
+      
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/bson/documents/">
         <i class='fa'></i>
-        System Requirements
+        Documents
     </a>
   </li>
 
@@ -554,11 +569,17 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/connecting/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/bson/extended-json/">
         <i class='fa'></i>
-        Connecting
+        Extended JSON
     </a>
+  </li>
+
+
+        
+        
+    </ul>
   </li>
 
 
@@ -583,8 +604,35 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/ssl/">
+<li class="toctree-l2 ">
+  <a href="/mongo-java-driver/3.0/reference/connecting/" class="">
+      <i class='fa'></i>
+      <span>Connecting</span>
+      
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/connecting/ssl/">
         <i class='fa'></i>
         SSL
     </a>
@@ -612,8 +660,8 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/authenticating/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/connecting/authenticating/">
         <i class='fa'></i>
         Authenticating
     </a>
@@ -622,30 +670,7 @@
 
         
         
-        
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/json-support/">
-        <i class='fa'></i>
-        JSON support
-    </a>
+    </ul>
   </li>
 
 
@@ -670,8 +695,35 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/logging/">
+<li class="toctree-l2 ">
+  <a href="/mongo-java-driver/3.0/reference/management/" class="">
+      <i class='fa'></i>
+      <span>Management</span>
+      
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/management/logging/">
         <i class='fa'></i>
         Logging
     </a>
@@ -699,11 +751,17 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/monitoring/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/management/monitoring/">
         <i class='fa'></i>
         Monitoring
     </a>
+  </li>
+
+
+        
+        
+    </ul>
   </li>
 
 
@@ -796,6 +854,19 @@ methods that have been removed in 3.0.0.</p>
 
 <p>Before upgrading to 3.0.0, compile against 2.13.0 with deprecation warnings enabled and remove use of any deprecated methods or classes.</p>
 
+<h2 id="system-requirements:104d6ec20d3c9fec84381edf43ec4f2f">System Requirements</h2>
+
+<p>The minimum JVM is now Java 6: however, specific features require Java 7:</p>
+
+<ul>
+<li>SSL support requires Java 7 in order to perform host name verification, which is enabled by default.  See
+<a href="/mongo-java-driver/3.0/reference/connecting/ssl/">SSL</a> for details on how to disable host name verification.</li>
+<li>The asynchronous API requires Java 7, as by default it relies on
+<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/AsynchronousSocketChannel.html">AsynchronousSocketChannel</a> for
+its implementation.  See <a href="No page found with path or logical name "async".
+">Async</a> for details on configuring the driver to use <a href="http://netty.io/">Netty</a> instead.</li>
+</ul>
+
 <h2 id="incompatiblities:104d6ec20d3c9fec84381edf43ec4f2f">Incompatiblities</h2>
 
 <p>The following lists the most significant backwards-breaking changes, along with the recommended solutions:</p>
@@ -856,6 +927,7 @@ replace with the corresponding
 <ul>
 <li><a href="#upgrading-to-3-0:104d6ec20d3c9fec84381edf43ec4f2f">Upgrading to 3.0</a>
 <ul>
+<li><a href="#system-requirements:104d6ec20d3c9fec84381edf43ec4f2f">System Requirements</a></li>
 <li><a href="#incompatiblities:104d6ec20d3c9fec84381edf43ec4f2f">Incompatiblities</a></li>
 </ul></li>
 </ul>

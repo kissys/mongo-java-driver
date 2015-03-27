@@ -261,6 +261,66 @@
 
 
   
+    
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+
+
+        
+          
+        
+      
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+
+
+        
+          
+        
+      
+    
+    
+      
+    
+  
 
 
         
@@ -312,18 +372,6 @@
       
       
         
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
       
     
     
@@ -575,11 +623,73 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/system-requirements/">
+<li class="toctree-l2 ">
+  <a href="/mongo-java-driver/3.0/reference/bson/" class="">
+      <i class='fa'></i>
+      <span>BSON</span>
+      
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/bson/documents/">
         <i class='fa'></i>
-        System Requirements
+        Documents
     </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/bson/extended-json/">
+        <i class='fa'></i>
+        Extended JSON
+    </a>
+  </li>
+
+
+        
+        
+    </ul>
   </li>
 
 
@@ -606,19 +716,17 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/connecting/">
-        <i class='fa'></i>
-        Connecting
-    </a>
-  </li>
-
-
+<li class="toctree-l2  current">
+  <a href="/mongo-java-driver/3.0/reference/connecting/" class="">
+      <i class='fa'></i>
+      <span>Connecting</span>
+      
+  </a>
+    <ul  class="current">
         
         
         
         
-        
 
 
 
@@ -635,8 +743,8 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/ssl/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/connecting/ssl/">
         <i class='fa'></i>
         SSL
     </a>
@@ -664,8 +772,8 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/authenticating/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/connecting/authenticating/">
         <i class='fa'></i>
         Authenticating
     </a>
@@ -674,30 +782,7 @@
 
         
         
-        
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/json-support/">
-        <i class='fa'></i>
-        JSON support
-    </a>
+    </ul>
   </li>
 
 
@@ -722,8 +807,35 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/logging/">
+<li class="toctree-l2 ">
+  <a href="/mongo-java-driver/3.0/reference/management/" class="">
+      <i class='fa'></i>
+      <span>Management</span>
+      
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/management/logging/">
         <i class='fa'></i>
         Logging
     </a>
@@ -751,11 +863,17 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/monitoring/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/management/monitoring/">
         <i class='fa'></i>
         Monitoring
     </a>
+  </li>
+
+
+        
+        
+    </ul>
   </li>
 
 
@@ -815,7 +933,7 @@
 
 
   
-<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/reference/connecting.md" target="_blank" title="Edit reference/connecting.md on GitHub"><i class="fa fa-pencil-square-o"></i></a>
+<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/reference/connecting/index.md" target="_blank" title="Edit reference/connecting/index.md on GitHub"><i class="fa fa-pencil-square-o"></i></a>
 
 
 
@@ -841,11 +959,11 @@
 
 
 
-<h2 id="connecting-to-mongodb:d67a243cdf521fafcb45cf3f560d3e12">Connecting to MongoDB</h2>
+<h2 id="connecting-to-mongodb:d680e8a854a7cbad6d490c445cba2eba">Connecting to MongoDB</h2>
 
 <p>General information about connecting to MongoDB servers.</p>
 
-<h3 id="connection-string:d67a243cdf521fafcb45cf3f560d3e12">Connection String</h3>
+<h3 id="connection-string:d680e8a854a7cbad6d490c445cba2eba">Connection String</h3>
 
 <p>The <a href="http://docs.mongodb.org/manual/reference/connection-string/">connection string</a> is the simplest way to connect to one or more
 MongoDB servers. A connection string mostly follows <a href="http://tools.ietf.org/html/rfc3986">RFC 3986</a> with the exception of the domain name.
@@ -863,9 +981,9 @@ MongoDB servers. A connection string mostly follows <a href="http://tools.ietf.o
 </code></pre></li>
 </ul>
 
-<p>The <a href="/mongo-java-driver/3.0/reference/authenticating/">authentication guide</a> contains information on how to provide credentials.</p>
+<p>The <a href="/mongo-java-driver/3.0/reference/connecting/authenticating/">authentication guide</a> contains information on how to provide credentials.</p>
 
-<h4 id="the-database-component:d67a243cdf521fafcb45cf3f560d3e12">The Database Component</h4>
+<h4 id="the-database-component:d680e8a854a7cbad6d490c445cba2eba">The Database Component</h4>
 
 <p>The database component is optional and is used to indicate which database to authenticate against. When the database component is not
 provided, the &ldquo;admin&rdquo; database is used.</p>
@@ -880,7 +998,7 @@ provided, the &ldquo;admin&rdquo; database is used.</p>
 parses the database component, does not use the database component for anything other than authentication.</p>
 </blockquote>
 
-<h4 id="options:d67a243cdf521fafcb45cf3f560d3e12">Options</h4>
+<h4 id="options:d680e8a854a7cbad6d490c445cba2eba">Options</h4>
 
 <p>Many options can be provided via the connection string. The ones that cannot may be provided in a <code>MongoClientOptions</code> instance. To
 provide an option, append a <code>?</code> to the connection string and separate options by an <code>&amp;</code>.</p>
@@ -893,7 +1011,7 @@ provide an option, append a <code>?</code> to the connection string and separate
 <p>For a comprehensive list of the available options, see the <a href="http://api.mongodb.org/java/3.0/com/mongodb/MongoClientURI.html">MongoClientURI</a>
 documentation.</p>
 
-<h3 id="mongoclient:d67a243cdf521fafcb45cf3f560d3e12">MongoClient</h3>
+<h3 id="mongoclient:d680e8a854a7cbad6d490c445cba2eba">MongoClient</h3>
 
 <p>A <code>MongoClient</code> instance will be the root object for all interaction with MongoDB. It is all that is needed to handle connecting to
 servers, monitoring servers, and performing operations against those servers. Without any arguments, constructing a <code>MongoClient</code>
@@ -932,15 +1050,15 @@ MongoClient client = new MongoClient(uri);
 <div id="btnv">
   
   <div class="pull-left">
-  <a class="navigation prev" href="/mongo-java-driver/3.0/reference/system-requirements/">
-      <i class="fa fa-long-arrow-left"> </i> System Requirements
+  <a class="navigation prev" href="/mongo-java-driver/3.0/reference/bson/">
+      <i class="fa fa-long-arrow-left"> </i> BSON
   </a>
   </div>
   
   
   <div class="pull-right">
-  <a class="navigation next" href="/mongo-java-driver/3.0/reference/ssl/">
-    SSL <i class="fa fa-long-arrow-right"> </i>
+  <a class="navigation next" href="/mongo-java-driver/3.0/reference/management/">
+    Management <i class="fa fa-long-arrow-right"> </i>
   </a>
   
 </div>
@@ -957,14 +1075,14 @@ MongoClient client = new MongoClient(uri);
 <ul>
 <li>
 <ul>
-<li><a href="#connecting-to-mongodb:d67a243cdf521fafcb45cf3f560d3e12">Connecting to MongoDB</a>
+<li><a href="#connecting-to-mongodb:d680e8a854a7cbad6d490c445cba2eba">Connecting to MongoDB</a>
 <ul>
-<li><a href="#connection-string:d67a243cdf521fafcb45cf3f560d3e12">Connection String</a>
+<li><a href="#connection-string:d680e8a854a7cbad6d490c445cba2eba">Connection String</a>
 <ul>
-<li><a href="#the-database-component:d67a243cdf521fafcb45cf3f560d3e12">The Database Component</a></li>
-<li><a href="#options:d67a243cdf521fafcb45cf3f560d3e12">Options</a></li>
+<li><a href="#the-database-component:d680e8a854a7cbad6d490c445cba2eba">The Database Component</a></li>
+<li><a href="#options:d680e8a854a7cbad6d490c445cba2eba">Options</a></li>
 </ul></li>
-<li><a href="#mongoclient:d67a243cdf521fafcb45cf3f560d3e12">MongoClient</a></li>
+<li><a href="#mongoclient:d680e8a854a7cbad6d490c445cba2eba">MongoClient</a></li>
 </ul></li>
 </ul></li>
 </ul>

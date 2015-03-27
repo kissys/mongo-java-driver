@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="/mongo-java-driver/3.0/img/favicon.png">
 
-    <title>Installation Guide</title>
+    <title>SSL</title>
 
     <link rel="stylesheet" href="/mongo-java-driver/3.0/css/bootstrap-custom.css" type="text/css" />
 <link rel="stylesheet" href="/mongo-java-driver/3.0/lib/font-awesome/css/font-awesome.min.css" type="text/css" />
@@ -111,6 +111,265 @@
 
 
   
+
+
+        
+          
+        
+      
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+
+
+        
+          
+        
+      
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+
+
+        
+          
+        
+      
+    
+    
+      
+    
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+
+
+        
+          
+        
+      
+    
+    
+      
+    
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+
+
+        
+          
+        
+      
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+
+
+        
+          
+        
+      
+    
+    
+      
+    
+  
+
+
+        
+          
+        
+      
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
   
   
   
@@ -121,6 +380,13 @@
 
   
     
+    
+    
+      
+      
+      
+        
+      
     
     
   
@@ -135,54 +401,11 @@
         
       
     
-      
-      
-    
     
   
 
 
-          
-            
-            
-
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-      
-    
-    
-  
-
-
-          
-            
-            
-
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-      
-    
-      
+        
       
     
       
@@ -227,18 +450,16 @@
 
 
 
-  
 
 
 
-
-<li class="toctree-l1  current">
+<li class="toctree-l1 ">
   <a href="/mongo-java-driver/3.0/tutorial/" class="">
       <i class='fa fa-road'></i>
       <span>Getting Started</span>
-      <span class="menu-arrow fa fa-angle-down"></span>
+      <span class="menu-arrow fa fa-angle-right"></span>
   </a>
-    <ul  class="current">
+    <ul >
         
         
         
@@ -255,8 +476,6 @@
 
 
 
-
-  
 
 
 
@@ -409,16 +628,18 @@
 
 
 
+  
 
 
 
-<li class="toctree-l1 ">
+
+<li class="toctree-l1  current">
   <a href="/mongo-java-driver/3.0/reference/" class="">
       <i class='fa fa-book'></i>
       <span>Reference</span>
-      <span class="menu-arrow fa fa-angle-right"></span>
+      <span class="menu-arrow fa fa-angle-down"></span>
   </a>
-    <ul >
+    <ul  class="current">
         
         
         
@@ -527,16 +748,18 @@
 
 
 
+  
 
 
 
-<li class="toctree-l2 ">
+
+<li class="toctree-l2  current">
   <a href="/mongo-java-driver/3.0/reference/connecting/" class="">
       <i class='fa'></i>
       <span>Connecting</span>
       
   </a>
-    <ul >
+    <ul  class="current">
         
         
         
@@ -553,6 +776,8 @@
 
 
 
+
+  
 
 
 
@@ -747,7 +972,7 @@
 
 
   
-<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/tutorial/installation-guide.md" target="_blank" title="Edit tutorial/installation-guide.md on GitHub"><i class="fa fa-pencil-square-o"></i></a>
+<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/reference/connecting/ssl.md" target="_blank" title="Edit reference/connecting/ssl.md on GitHub"><i class="fa fa-pencil-square-o"></i></a>
 
 
 
@@ -764,18 +989,70 @@
   
   
   
-  
-  <li><a href="/mongo-java-driver/3.0/tutorial/">Getting Started</a> <i class="fa fa-angle-right"></i></li>
-  <li>Installation Guide</li>
+  <li><a href="/mongo-java-driver/3.0/reference/">Reference</a> <i class="fa fa-angle-right"></i></li>
+  <li><a href="/mongo-java-driver/3.0/reference/connecting/">Connecting</a> <i class="fa fa-angle-right"></i></li>
+  <li>SSL</li>
 </ul>
 </div>
 
 
 
 
-<h1 id="installation:9d4f5debee078ff2736b8039cc26277c">Installation</h1>
+<h1 id="ssl:3c79738ba42290c5c30beda88b41710e">SSL</h1>
 
-<p>How to install the driver</p>
+<p>The Java driver supports SSL connections to MongoDB servers using the underlying support for SSL provided by the JDK. You can configure
+the driver to use SSL either with <code>MongoClientURI</code> or with <code>MongoClientOptions</code>.</p>
+
+<p>With <code>MongoClientURI</code>, specify `ssl=true as a query parameter, as in:</p>
+
+<pre><code class="language-java">    new MongoClientURI(&quot;mongodb://localhost/?ssl=true&quot;)
+</code></pre>
+
+<p>With <code>MongoClientOptions</code>, set the sslEnabled property to true, as in:</p>
+
+<pre><code class="language-java">    MongoClientOptions.builder().sslEnabled(true).build()
+</code></pre>
+
+<h2 id="host-name-verification:3c79738ba42290c5c30beda88b41710e">Host name verification</h2>
+
+<p>By default, the driver ensures that the host name included in the server&rsquo;s SSL certificate(s) matches the host name(s) provided when
+constructing a <code>MongoClient</code>.  However, this host name verification requires a Java 7 JVM, as it relies on additions to the
+<code>javax.net.SSLParameters</code> class that were introduced in Java 7.  If your application must run on Java 6, or for some other reason you need
+ to disable host name verification, you must expicitly indicate this in <code>MongoClientOptions</code> using the <code>sslInvalidHostNameAllowed</code> property:</p>
+
+<pre><code class="language-java">    MongoClientOptions.builder().sslEnabled(true).sslInvalidHostNameAllowed(true).build()
+</code></pre>
+
+<h2 id="jvm-system-properties:3c79738ba42290c5c30beda88b41710e">JVM system properties</h2>
+
+<p>A typical application will need to set several JVM system properties to ensure that the client is able to validate the SSL certificate
+presented by the server:</p>
+
+<ul>
+<li><code>javax.net.ssl.trustStore</code>: the path to a trust store containing the certificate of the signing authority</li>
+<li><code>javax.net.ssl.trustStorePassword</code>: the password to access this trust store</li>
+</ul>
+
+<p>The trust store is typically created with the <a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html">keytool</a>
+command line program provided as part of the JDK.  For example:</p>
+
+<pre><code class="language-bash">    keytool -importcert -trustcacerts -file &lt;path to certificate authority file&gt; 
+        -keystore &lt;path to trust store&gt; -storepass &lt;password&gt;
+</code></pre>
+
+<p>A typical application will also need to set several JVM system properties to ensure that the client presents an SSL certificate to the
+MongoDB server:</p>
+
+<ul>
+<li><code>javax.net.ssl.keyStore</code>: the path to a key store containing the client&rsquo;s SSL certificates</li>
+<li><code>javax.net.ssl.keyStorePassword</code>: the password to access this key store</li>
+</ul>
+
+<p>The key store is typically created with the <a href="http://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html">keytool</a> or the
+<a href="https://www.openssl.org/docs/apps/openssl.html">openssl</a> command line program.</p>
+
+<p>For more information on configuring a Java application for SSL, please refer to the<br />
+<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html">JSSE Reference Guide</a>.</p>
 
 
 
@@ -784,10 +1061,16 @@
 
 <div id="btnv">
   
+  <div class="pull-left">
+  <a class="navigation prev" href="/mongo-java-driver/3.0/reference/bson/">
+      <i class="fa fa-long-arrow-left"> </i> BSON
+  </a>
+  </div>
+  
   
   <div class="pull-right">
-  <a class="navigation next" href="/mongo-java-driver/3.0/tutorial/crud-operations/">
-    CRUD Operations <i class="fa fa-long-arrow-right"> </i>
+  <a class="navigation next" href="/mongo-java-driver/3.0/reference/connecting/authenticating/">
+    Authenticating <i class="fa fa-long-arrow-right"> </i>
   </a>
   
 </div>
@@ -802,7 +1085,11 @@
     <span class="toc-header">On this page</span>
     <nav id="TableOfContents">
 <ul>
-<li><a href="#installation:9d4f5debee078ff2736b8039cc26277c">Installation</a></li>
+<li><a href="#ssl:3c79738ba42290c5c30beda88b41710e">SSL</a>
+<ul>
+<li><a href="#host-name-verification:3c79738ba42290c5c30beda88b41710e">Host name verification</a></li>
+<li><a href="#jvm-system-properties:3c79738ba42290c5c30beda88b41710e">JVM system properties</a></li>
+</ul></li>
 </ul>
 </nav>
   </div>

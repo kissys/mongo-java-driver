@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="/mongo-java-driver/3.0/img/favicon.png">
 
-    <title>System Requirements</title>
+    <title>Documents</title>
 
     <link rel="stylesheet" href="/mongo-java-driver/3.0/css/bootstrap-custom.css" type="text/css" />
 <link rel="stylesheet" href="/mongo-java-driver/3.0/lib/font-awesome/css/font-awesome.min.css" type="text/css" />
@@ -261,6 +261,28 @@
 
 
   
+    
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
   
   
   
@@ -274,6 +296,11 @@
     
     
       
+      
+      
+        
+      
+    
     
   
   
@@ -287,13 +314,11 @@
         
       
     
-      
-      
     
-      
-      
-    
-      
+  
+
+
+        
       
     
       
@@ -553,10 +578,39 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/system-requirements/">
+<li class="toctree-l2  current">
+  <a href="/mongo-java-driver/3.0/reference/bson/" class="">
+      <i class='fa'></i>
+      <span>BSON</span>
+      
+  </a>
+    <ul  class="current">
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/bson/documents/">
         <i class='fa'></i>
-        System Requirements
+        Documents
     </a>
   </li>
 
@@ -582,11 +636,17 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/connecting/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/bson/extended-json/">
         <i class='fa'></i>
-        Connecting
+        Extended JSON
     </a>
+  </li>
+
+
+        
+        
+    </ul>
   </li>
 
 
@@ -611,8 +671,35 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/ssl/">
+<li class="toctree-l2 ">
+  <a href="/mongo-java-driver/3.0/reference/connecting/" class="">
+      <i class='fa'></i>
+      <span>Connecting</span>
+      
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/connecting/ssl/">
         <i class='fa'></i>
         SSL
     </a>
@@ -640,8 +727,8 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/authenticating/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/connecting/authenticating/">
         <i class='fa'></i>
         Authenticating
     </a>
@@ -650,30 +737,7 @@
 
         
         
-        
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/json-support/">
-        <i class='fa'></i>
-        JSON support
-    </a>
+    </ul>
   </li>
 
 
@@ -698,8 +762,35 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/logging/">
+<li class="toctree-l2 ">
+  <a href="/mongo-java-driver/3.0/reference/management/" class="">
+      <i class='fa'></i>
+      <span>Management</span>
+      
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/management/logging/">
         <i class='fa'></i>
         Logging
     </a>
@@ -727,11 +818,17 @@
 
 
 
-    <li class="toctree-l2">
-    <a href="/mongo-java-driver/3.0/reference/monitoring/">
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.0/reference/management/monitoring/">
         <i class='fa'></i>
         Monitoring
     </a>
+  </li>
+
+
+        
+        
+    </ul>
   </li>
 
 
@@ -791,7 +888,7 @@
 
 
   
-<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/reference/system-requirements.md" target="_blank" title="Edit reference/system-requirements.md on GitHub"><i class="fa fa-pencil-square-o"></i></a>
+<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/reference/bson/documents.md" target="_blank" title="Edit reference/bson/documents.md on GitHub"><i class="fa fa-pencil-square-o"></i></a>
 
 
 
@@ -808,27 +905,136 @@
   
   
   
-  
   <li><a href="/mongo-java-driver/3.0/reference/">Reference</a> <i class="fa fa-angle-right"></i></li>
-  <li>System Requirements</li>
+  <li><a href="/mongo-java-driver/3.0/reference/bson/">BSON</a> <i class="fa fa-angle-right"></i></li>
+  <li>Documents</li>
 </ul>
 </div>
 
 
 
 
-<h1 id="system-requirements:713449ef5ae6758386844a511f29cc91">System Requirements</h1>
+<h2 id="bsondocument:e92c82a38c6cc77d5440f2e87c867df6">BsonDocument</h2>
 
-<p>The 3.0 Java driver will run with Java 6 or later: however, specific features require Java 7:</p>
+<p>Although not generally needed in the high-level driver API, the <a href="http://api.mongodb.org/java/3.0/?org/bson/BsonDocument.html">BsonDocument</a> class is central to
+the way that documents are managed internally by the driver.  The BsonDocument class can represent dynamically structured documents of
+any complexity with a type-safe API, at the cost of an additional level of verbosity.  For instance, the document
+<code>{ a: &quot;MongoDB&quot;, b: [ { c: 1 } ] }</code> can be constructed as a BsonDocument as follows:</p>
+
+<pre><code class="language-java">new BsonDocument().append(&quot;a&quot;, new BsonString(&quot;MongoDB&quot;))
+                  .append(&quot;b&quot;, new BsonArray(Arrays.asList(new BsonInt32(1), new BsonInt32(2))));
+</code></pre>
+
+<p>The type safety comes from BsonDocument implementing <code>Map&lt;String, BsonValue&gt;</code>, so even built-in types like <code>int</code>, <code>String</code> and <code>List</code> must
+be wrapped in a sub-class of <code>BsonValue</code>.  For a complete list of BsonValue sub-types, please consult the
+<a href="http://api.mongodb.org/java/3.0/?org/bson/BsonValue.html">API documentation</a></p>
+
+<h2 id="document:e92c82a38c6cc77d5440f2e87c867df6">Document</h2>
+
+<p>Most users of the high-level driver API will use the <a href="http://api.mongodb.org/java/3.0/?org/bson/Document.html">Document</a> class instead.  Like BsonDocument, the
+Document class can represent dynamically structured documents of any complexity; however, the typing is much looser, as Document
+implements <code>Map&lt;String, Object&gt;</code>. As a result, the same document as above can be constructed using the Document class as follows:</p>
+
+<pre><code class="language-java">new Document().append(&quot;a&quot;, &quot;MongoDB&quot;)
+              .append(&quot;b&quot;, Arrays.asList(1, 2));
+</code></pre>
+
+<p>There is less code to write, but runtime errors are possible if you inadvertently add an instance of an unsupported value type.  The most
+commonly used value types are:</p>
+
+<table>
+<thead>
+<tr>
+<th>BSON type</th>
+<th>Java type</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Document</td>
+<td>org.bson.Document</td>
+</tr>
+
+<tr>
+<td>Array</td>
+<td>java.util.List</td>
+</tr>
+
+<tr>
+<td>Date</td>
+<td>java.util.Date</td>
+</tr>
+
+<tr>
+<td>Boolean</td>
+<td>java.lang.Boolean</td>
+</tr>
+
+<tr>
+<td>Double</td>
+<td>java.lang.Double</td>
+</tr>
+
+<tr>
+<td>Int32</td>
+<td>java.lang.Integer</td>
+</tr>
+
+<tr>
+<td>Int64</td>
+<td>java.lang.Long</td>
+</tr>
+
+<tr>
+<td>String</td>
+<td>java.lang.String</td>
+</tr>
+
+<tr>
+<td>Binary</td>
+<td>org.bson.types.Binary</td>
+</tr>
+
+<tr>
+<td>ObjectId</td>
+<td>org.bson.types.ObjectId</td>
+</tr>
+
+<tr>
+<td>Null</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+
+<p>It is actually possible to change these mappings; the mechanism for doing so is currently beyond the scope of this reference.</p>
+
+<h2 id="dbobject:e92c82a38c6cc77d5440f2e87c867df6">DBObject</h2>
+
+<p>Although not recommended for new applications, those upgrading from the 2.x driver series may continue to use the
+<a href="http://api.mongodb.org/java/3.0/?com/mongodb/DBObject.html">DBObject</a> interface to represent BSON documents.  DBObject is similar to Document in that it
+represents BSON values as <code>Object</code>, but it has a few shortcomings that were impossible to overcome:</p>
 
 <ul>
-<li>SSL support requires Java 7 in order to perform host name verification, which is enabled by default.  See
-<a href="/mongo-java-driver/3.0/reference/connecting/#SSL:d67a243cdf521fafcb45cf3f560d3e12">SSL</a> for details on how to disable host name verification.</li>
-<li>The asynchronous API requires Java 7, as by default it relies on
-<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/AsynchronousSocketChannel.html">AsynchronousSocketChannel</a> for
-its implementation.  See <a href="No page found with path or logical name "async".
-">Async</a> for details on configuring the driver to use <a href="http://netty.io/">Netty</a> instead.</li>
+<li>it is an interface rather than a class, so it&rsquo;s API can not be extended without breaking binary compatibility</li>
+<li>it doesn&rsquo;t actually implement <code>Map&lt;String, Object&gt;</code></li>
+<li>because it is an interface, a separate concrete class called <a href="http://api.mongodb.org/java/3.0/?com/mongodb/BasicDBObject.html">BasicDBObject</a> which implements
+that interface, is required</li>
 </ul>
+
+<h1 id="bson:e92c82a38c6cc77d5440f2e87c867df6">Bson</h1>
+
+<p>To tie these all together, the driver contains a small but powerful interface called, simply,
+<a href="http://api.mongodb.org/java/3.0/?org/bson/conversions/Bson.html">Bson</a>.  Any class that represents a BSON document, whether included in the driver itself
+or from a third party, can implement this interface and can then be used any place in the high-level API where a BSON document is
+required. The three classes discussed above all implement this interface and so can be used interchangeably based on the needs of a given
+application.  For example:</p>
+
+<pre><code class="language-java">collection.find(new BsonDocument(&quot;x&quot;, new BsonInt32(1)));
+collection.find(new Document(&quot;x&quot;, 1));
+collection.find(new BasicDBObject(&quot;x&quot;, 1));
+</code></pre>
 
 
 
@@ -839,8 +1045,8 @@ its implementation.  See <a href="No page found with path or logical name "async
   
   
   <div class="pull-right">
-  <a class="navigation next" href="/mongo-java-driver/3.0/reference/connecting/">
-    Connecting <i class="fa fa-long-arrow-right"> </i>
+  <a class="navigation next" href="/mongo-java-driver/3.0/reference/bson/extended-json/">
+    Extended JSON <i class="fa fa-long-arrow-right"> </i>
   </a>
   
 </div>
@@ -855,7 +1061,13 @@ its implementation.  See <a href="No page found with path or logical name "async
     <span class="toc-header">On this page</span>
     <nav id="TableOfContents">
 <ul>
-<li><a href="#system-requirements:713449ef5ae6758386844a511f29cc91">System Requirements</a></li>
+<li>
+<ul>
+<li><a href="#bsondocument:e92c82a38c6cc77d5440f2e87c867df6">BsonDocument</a></li>
+<li><a href="#document:e92c82a38c6cc77d5440f2e87c867df6">Document</a></li>
+<li><a href="#dbobject:e92c82a38c6cc77d5440f2e87c867df6">DBObject</a></li>
+</ul></li>
+<li><a href="#bson:e92c82a38c6cc77d5440f2e87c867df6">Bson</a></li>
 </ul>
 </nav>
   </div>
