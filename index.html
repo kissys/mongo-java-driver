@@ -103,28 +103,36 @@
 
 
 <div id="downloadWidget">
-  <form class="form-inline">
-    <a id="downloadLink" href="https://oss.sonatype.org/content/repositories/releases/org/mongodb/mongodb-driver/3.0.0-rc1/"
-          class="btn btn-large btn-dark btn-download" target="_blank">Download</a>
+  <div class="container">
+    <div class="row downloadForm">
+      <form>
+        <div class="col-xs-5 col-lg-4 col-lg-push-2 ">
+      
       
       
         <select class="driverPicker">
           
-          <option value="0">mongodb-driver</option>
+          
+          <option value="0" data-versions="3.0.0-rc1">mongodb-driver</option>
           
           
-          <option value="1">mongodb-driver-async</option>
+          
+          <option value="1" data-versions="3.0.0-rc1,2.13.0,2.12.5">mongo-java-driver</option>
           
           
-          <option value="2">mongo-java-driver</option>
+          
+          <option value="2" data-versions="3.0.0-rc1">mongodb-driver-async</option>
           
           
-          <option value="3">mongodb-driver-core</option>
+          
+          <option value="3" data-versions="3.0.0-rc1">mongodb-driver-core</option>
           
           
         </select>
       
-
+      </div>
+    <div class="col-xs-5 col-lg-4 col-lg-push-2 ">
+    
     
     
       <select class="releasePicker">
@@ -132,27 +140,41 @@
         <option value="0">3.0.0-rc1</option>
         
         
-        <option value="1">2.13.0</option>
+        <option value="1"disabled="disabled">2.13.0</option>
         
         
-        <option value="2">2.12.5</option>
+        <option value="2"disabled="disabled">2.12.5</option>
         
         
       </select>
     
+    </div>
+    <div class="col-lg-2 col-lg-push-2 ">
     <input type="checkbox" checked class="distroPicker" data-toggle="toggle" data-on="Maven" data-off="Gradle" data-offstyle="success">
+    </div>
   </form>
+  <div class="hidden-md hidden-sm hidden-xs col-lg-2 col-lg-pull-10 downloadLink">
+  <a href="https://oss.sonatype.org/content/repositories/releases/org/mongodb/mongodb-driver/3.0.0-rc1/"
+        class="btn btn-dark btn-download" target="_blank">Download</a>
+  </div>
+  </div>
+
+
+  <div class="row">
   <div class="clipboard" title="copy">
   <button class="btn btn-dark"><i class="fa fa-clipboard fa-2"></i></button>
   </div>
   
   
+  
     
     
       
       
         
         
+          
+          
           
           
           
@@ -176,62 +198,27 @@
 
 </code></pre>
 </div>
-            
           
           
           
           
-<div id="maven-1-0" class="download  hidden">
-<pre><code>
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongodb-driver&lt;/artifactId&gt;
-        &lt;version&gt;2.13.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-</code></pre>
-</div>
-<div id="gradle-1-0" class="download hidden">
-<pre><code>
-  dependencies {
-      compile 'org.mongodb:mongodb-driver:2.13.0'
-  }
-
-</code></pre>
-</div>
-            
           
           
           
           
-<div id="maven-2-0" class="download  hidden">
-<pre><code>
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongodb-driver&lt;/artifactId&gt;
-        &lt;version&gt;2.12.5&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-</code></pre>
-</div>
-<div id="gradle-2-0" class="download hidden">
-<pre><code>
-  dependencies {
-      compile 'org.mongodb:mongodb-driver:2.12.5'
-  }
-
-</code></pre>
-</div>
-            
+          
+          
+          
+          
+          
+          
+          
           
           
           
           <div id="driver-0" class="download description">
-            The synchronous driver.
+            <p>The synchronous driver, new in 3.0, for older versions select the: <code>mongo-java-driver</code></p>
+
           </div>
           
       
@@ -242,12 +229,14 @@
           
           
           
+          
+          
 <div id="maven-0-1" class="download  hidden">
 <pre><code>
 &lt;dependencies&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongodb-driver-async&lt;/artifactId&gt;
+        &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
         &lt;version&gt;3.0.0-rc1&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;
@@ -257,12 +246,16 @@
 <div id="gradle-0-1" class="download hidden">
 <pre><code>
   dependencies {
-      compile 'org.mongodb:mongodb-driver-async:3.0.0-rc1'
+      compile 'org.mongodb:mongo-java-driver:3.0.0-rc1'
   }
 
 </code></pre>
 </div>
-            
+          
+          
+          
+          
+          
           
           
           
@@ -272,7 +265,7 @@
 &lt;dependencies&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongodb-driver-async&lt;/artifactId&gt;
+        &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
         &lt;version&gt;2.13.0&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;
@@ -282,12 +275,16 @@
 <div id="gradle-1-1" class="download hidden">
 <pre><code>
   dependencies {
-      compile 'org.mongodb:mongodb-driver-async:2.13.0'
+      compile 'org.mongodb:mongo-java-driver:2.13.0'
   }
 
 </code></pre>
 </div>
-            
+          
+          
+          
+          
+          
           
           
           
@@ -297,7 +294,7 @@
 &lt;dependencies&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongodb-driver-async&lt;/artifactId&gt;
+        &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
         &lt;version&gt;2.12.5&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;
@@ -307,17 +304,20 @@
 <div id="gradle-2-1" class="download hidden">
 <pre><code>
   dependencies {
-      compile 'org.mongodb:mongodb-driver-async:2.12.5'
+      compile 'org.mongodb:mongo-java-driver:2.12.5'
   }
 
 </code></pre>
 </div>
-            
+          
+          
+          
           
           
           
           <div id="driver-1" class="download description hidden">
-            The new asynchronous driver.
+            <p>An uber jar containing the bson library, the core library and the mongodb-driver.</p>
+
           </div>
           
       
@@ -328,12 +328,14 @@
           
           
           
+          
+          
 <div id="maven-0-2" class="download  hidden">
 <pre><code>
 &lt;dependencies&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
+        &lt;artifactId&gt;mongodb-driver-async&lt;/artifactId&gt;
         &lt;version&gt;3.0.0-rc1&lt;/version&gt;
     &lt;/dependency&gt;
 &lt;/dependencies&gt;
@@ -343,67 +345,32 @@
 <div id="gradle-0-2" class="download hidden">
 <pre><code>
   dependencies {
-      compile 'org.mongodb:mongo-java-driver:3.0.0-rc1'
+      compile 'org.mongodb:mongodb-driver-async:3.0.0-rc1'
   }
 
 </code></pre>
 </div>
-            
           
           
           
           
-<div id="maven-1-2" class="download  hidden">
-<pre><code>
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
-        &lt;version&gt;2.13.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-</code></pre>
-</div>
-<div id="gradle-1-2" class="download hidden">
-<pre><code>
-  dependencies {
-      compile 'org.mongodb:mongo-java-driver:2.13.0'
-  }
-
-</code></pre>
-</div>
-            
           
           
           
           
-<div id="maven-2-2" class="download  hidden">
-<pre><code>
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
-        &lt;version&gt;2.12.5&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-</code></pre>
-</div>
-<div id="gradle-2-2" class="download hidden">
-<pre><code>
-  dependencies {
-      compile 'org.mongodb:mongo-java-driver:2.12.5'
-  }
-
-</code></pre>
-</div>
-            
+          
+          
+          
+          
+          
+          
+          
           
           
           
           <div id="driver-2" class="download description hidden">
-            An uber jar containing the bson library, the core library and the mongodb-driver.
+            <p>The new asynchronous driver, new in 3.0</p>
+
           </div>
           
       
@@ -411,6 +378,8 @@
       
         
         
+          
+          
           
           
           
@@ -434,67 +403,34 @@
 
 </code></pre>
 </div>
-            
           
           
           
           
-<div id="maven-1-3" class="download  hidden">
-<pre><code>
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongodb-driver-core&lt;/artifactId&gt;
-        &lt;version&gt;2.13.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-</code></pre>
-</div>
-<div id="gradle-1-3" class="download hidden">
-<pre><code>
-  dependencies {
-      compile 'org.mongodb:mongodb-driver-core:2.13.0'
-  }
-
-</code></pre>
-</div>
-            
           
           
           
           
-<div id="maven-2-3" class="download  hidden">
-<pre><code>
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
-        &lt;artifactId&gt;mongodb-driver-core&lt;/artifactId&gt;
-        &lt;version&gt;2.12.5&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-</code></pre>
-</div>
-<div id="gradle-2-3" class="download hidden">
-<pre><code>
-  dependencies {
-      compile 'org.mongodb:mongodb-driver-core:2.12.5'
-  }
-
-</code></pre>
-</div>
-            
+          
+          
+          
+          
+          
+          
+          
           
           
           
           <div id="driver-3" class="download description hidden">
-            The core library.
+            <p>The core library, new in 3.0</p>
+
           </div>
           
       
       
-</div>
+    </div>
+    </div>
+  </div>
 
       </div>
       <div class="col-md-4">
